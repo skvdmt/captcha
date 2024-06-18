@@ -17,8 +17,8 @@ const (
 	lettersCount = 4
 	minFontSize  = 100
 	maxFontSize  = 200
-	minRotate    = -20
-	maxRotate    = 20
+	minRotate    = -70
+	maxRotate    = 70
 )
 
 func main() {
