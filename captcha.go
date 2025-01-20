@@ -3,6 +3,7 @@ package captcha
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"image"
 	"image/color"
@@ -157,4 +158,16 @@ func (c *Captcha) SaveToFile(filename string) error {
 		)
 	}
 	return nil
+}
+
+// GetImage get captcha image as slice bytes
+func (c *Captcha) GetImage() (image []byte, err error) {
+	buf := new(bytes.Buffer)
+	if err = png.Encode(buf, c.Image); err != nil {
+		return nil, fmt.Errorf(
+			"error captcha encoding: %w",
+			err,
+		)
+	}
+	return buf.Bytes(), nil
 }
