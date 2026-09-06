@@ -2,51 +2,42 @@ package main
 
 import (
 	"fmt"
-	"github.com/skvdmt/captcha"
-	"github.com/skvdmt/captcha/config"
 	"log"
+
+	"github.com/skvdmt/captcha"
 )
 
 const (
-	fileFontOpenSansBoldItalic   = "./fonts/OpenSans-BoldItalic.ttf"
-	fileFontOswaldBold           = "./fonts/Oswald-Bold.ttf"
-	fileFontGoBold               = "./fonts/Go-Bold.ttf"
-	fileFontRobotoMonoBoldItalic = "./fonts/RobotoMono-BoldItalic.ttf"
+	FONT_FILE_OPEN_SANS_BOLD_ITALIC   = "./fonts/OpenSans-BoldItalic.ttf"
+	FONT_FILE_OSWALD_BOLD             = "./fonts/Oswald-Bold.ttf"
+	FONT_FILE_GO_BOLD                 = "./fonts/Go-Bold.ttf"
+	FONT_FILE_ROBOTO_MONO_BOLD_ITALIC = "./fonts/RobotoMono-BoldItalic.ttf"
 
-	captchaFile  = "./captcha.png"
-	lettersCount = 4
-	minFontSize  = 100
-	maxFontSize  = 200
-	minRotate    = -70
-	maxRotate    = 70
+	CAPTCHA_FILE  = "./captcha.png"
+	LETTERS_COUNT = 4
+	MIN_FONT_SIZE = 80
+	MAX_FONT_SIZE = 100
+	MIN_ROTATE    = -70
+	MAX_ROTATE    = 70
 )
 
 func main() {
-	capt, err := captcha.New(&captcha.Config{
-		FontFiles: []string{
-			fileFontGoBold,
-			fileFontRobotoMonoBoldItalic,
-			fileFontOswaldBold,
-			fileFontOpenSansBoldItalic,
-		},
-		LettersLength: &config.LettersLength{
-			Min: lettersCount,
-			Max: lettersCount,
-		},
-		FontSizes: &config.FontSizes{
-			Min: minFontSize,
-			Max: maxFontSize,
-		},
-		Rotate: &config.Rotate{
-			Min: minRotate,
-			Max: maxRotate,
-		},
-	})
+	c, err := captcha.New(
+		captcha.WithFontFiles([]string{
+			FONT_FILE_OPEN_SANS_BOLD_ITALIC,
+			FONT_FILE_OSWALD_BOLD,
+			FONT_FILE_GO_BOLD,
+			FONT_FILE_ROBOTO_MONO_BOLD_ITALIC,
+		}),
+		captcha.WithLettersLength(LETTERS_COUNT, LETTERS_COUNT),
+		captcha.WithFontSizes(MIN_FONT_SIZE, MAX_FONT_SIZE),
+		captcha.WithRotate(MIN_ROTATE, MAX_ROTATE),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err = capt.SaveToFile(captchaFile); err != nil {
+	if err = c.SaveToFile(CAPTCHA_FILE); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Value: %s\n", capt.Value)
+	fmt.Printf("Value: %s\n", c.Value)
 }

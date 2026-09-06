@@ -23,27 +23,28 @@ type Captcha struct {
 }
 
 // New constructor of image generator
-func New(config *Config) (*Captcha, error) {
-	c := &Captcha{
-		config: config,
+func New(options ...Option) (*Captcha, error) {
+	// config
+	c := NewConfig()
+	for _, o := range options {
+		o(c)
 	}
-	var err error
-	if err = c.config.Setup(); err != nil {
+	if err := c.Validate(); err != nil {
 		return nil, err
 	}
-
-	if err = c.setFonts(); err != nil {
+	// create captcha
+	i := &Captcha{
+		config: c,
+	}
+	if err := i.setFonts(); err != nil {
 		return nil, err
 	}
-	c.Value = c.generateValue()
-	if err = c.setLetters(); err != nil {
+	i.Value = i.generateValue()
+	if err := i.setLetters(); err != nil {
 		return nil, err
 	}
-
-	c.joinLetterImages()
-
-	//fmt.Printf("Captcha: %+v\n", c)
-	return c, nil
+	i.joinLetterImages()
+	return i, nil
 }
 
 // setFonts setting fonts from config
