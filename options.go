@@ -4,7 +4,7 @@ import (
 	"image/color"
 )
 
-// Option.
+// Option Functional option.
 type Option func(c *Config)
 
 // WithFontFiles Set font files.

@@ -2,9 +2,10 @@ package captcha
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
-	"os"
 )
 
 // Font шрифт

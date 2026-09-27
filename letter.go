@@ -2,12 +2,13 @@ package captcha
 
 import (
 	"fmt"
-	"github.com/disintegration/imaging"
-	"github.com/golang/freetype"
-	"golang.org/x/image/font"
 	"image"
 	"image/color"
 	"image/draw"
+
+	"github.com/disintegration/imaging"
+	"github.com/golang/freetype"
+	"golang.org/x/image/font"
 )
 
 type ConfigLetter struct {
@@ -75,10 +76,9 @@ func (l *Letter) createImage() {
 	iw := l.letterWidth * 3
 	ih := l.letterHeight * 3
 	l.image = image.NewRGBA(image.Rect(0, 0, iw, ih))
-	draw.Draw(l.image, l.image.Bounds(), image.NewUniform(l.config.BGColor), image.ZP, draw.Over)
+	draw.Draw(l.image, l.image.Bounds(), image.NewUniform(l.config.BGColor), image.Point{}, draw.Over)
 	l.ctx.SetClip(l.image.Bounds())
 	l.ctx.SetDst(l.image)
-
 }
 
 // drawLetterToImage draw letter to image

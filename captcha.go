@@ -110,7 +110,7 @@ func (c *Captcha) joinLetterImages() {
 
 	// create image
 	c.Image = image.NewRGBA(image.Rect(0, 0, width, height))
-	draw.Draw(c.Image, c.Image.Bounds(), image.NewUniform(color.White), image.ZP, draw.Src)
+	draw.Draw(c.Image, c.Image.Bounds(), image.NewUniform(color.White), image.Point{}, draw.Src)
 
 	// add letter images
 	var x int
